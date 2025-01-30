@@ -4,17 +4,28 @@ pipeline {
     environment {
         AWS_REGION = 'us-east-1'  // Set your AWS region
         BUCKET_NAME = 'my-jenkins-s3bucket'  // Set your S3 bucket name
+        TERRAFORM_VERSION = '1.5.0'  // Set the Terraform version you want to use
+        TERRAFORM_DIR = "${WORKSPACE}/terraform"  // Path to install Terraform
     }
 
     stages {
         stage('Install Terraform') {
             steps {
                 script {
-                    // Install Terraform if it's not already installed
-                    sh 'curl -LO https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip'
-                    sh 'unzip terraform_1.5.0_linux_amd64.zip'
-                    sh 'sudo mv terraform /usr/local/bin/'
-                    sh 'terraform -v' // Verify installation
+                    // Create a directory for Terraform installation if it doesn't exist
+                    sh "mkdir -p ${TERRAFORM_DIR}"
+
+                    // Download Terraform
+                    sh """
+                    curl -LO https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+                    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d ${TERRAFORM_DIR}
+                    """
+
+                    // Move the terraform binary into the workspace
+                    sh "mv ${TERRAFORM_DIR}/terraform /usr/local/bin/"
+
+                    // Verify the installation
+                    sh "terraform -v"
                 }
             }
         }
