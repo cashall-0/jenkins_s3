@@ -31,14 +31,14 @@ pipeline {
             }
         }
 
-        stage('Apply Terraform') {
-            steps {
-                script {
-                    // Apply the Terraform configuration to create the resources
-                    sh 'terraform apply -auto-approve'
-                }
-            }
-        }
+        // stage('Apply Terraform') {
+        //     steps {
+        //         script {
+        //             // Apply the Terraform configuration to create the resources
+        //             sh 'terraform apply -auto-approve'
+        //         }
+        //     }
+        // }
         stage("apply") {
             when {
                 expression { params.ACTION == 'apply' }
