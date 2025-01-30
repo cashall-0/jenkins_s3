@@ -26,6 +26,7 @@ pipeline {
 
                     // Verify the installation
                     sh "terraform -v"
+                    sh "aws configure set region ${AWS_REGION}"
                 }
             }
         }
