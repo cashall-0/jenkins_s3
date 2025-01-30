@@ -39,6 +39,29 @@ pipeline {
                 }
             }
         }
+        stage("apply") {
+            when {
+                expression { params.ACTION == 'apply' }
+            }
+            steps {
+                script {
+                    // Apply the Terraform configuration to create the resources
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+
+        stage("destroy") {
+            when {
+                expression { params.ACTION == 'destroy' }
+            }
+            steps {
+                script {
+                    // Apply the Terraform configuration to create the resources
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
     }
 
     post {
