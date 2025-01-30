@@ -7,7 +7,7 @@ pipeline {
         stage('Checkout Terraform Code') {
             steps {
                 script {
-                    // Checkout your Terraform repository (if using version control)
+                    // Checkout your Terraform repository (if using version control for it)
                     checkout scm
                 }
             }
