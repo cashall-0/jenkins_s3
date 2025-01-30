@@ -26,7 +26,6 @@ pipeline {
 
                     // Verify the installation
                     sh "terraform -v"
-                    sh "aws configure set region ${AWS_REGION}"
                 }
             }
         }
@@ -44,7 +43,7 @@ pipeline {
             steps {
                 script {
                     // Initialize Terraform to download required provider plugins
-                    sh 'terraform init'
+                    sh 'terraform init -backend-config="region=${AWS_REGION}"'
                 }
             }
         }
