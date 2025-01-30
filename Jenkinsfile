@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'us-east-1'  // Set your AWS region
         BUCKET_NAME = 'my-jenkins-s3bucket'  // Set your S3 bucket name
-        TERRAFORM_VERSION = '1.5.0'  // Set the Terraform version you want to use
+        TERRAFORM_VERSION = '1.10.5'  // Set the Terraform version you want to use
         TERRAFORM_DIR = "${WORKSPACE}/terraform"  // Path to install Terraform within the workspace
     }
 
@@ -26,6 +26,7 @@ pipeline {
 
                     // Verify the installation
                     sh "terraform -v"
+                    sh "aws configure set region ${AWS_REGION}"
                 }
             }
         }
